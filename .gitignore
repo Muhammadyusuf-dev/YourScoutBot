@@ -1,0 +1,13 @@
+# created by virtualenv automatically
+# Virtual environment
+../.venv/
+
+# Environment variables
+.env
+
+# Telegram sessions
+*.session
+
+# Python cache
+__pycache__/
+*.pyc

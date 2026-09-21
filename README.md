@@ -1,120 +1,45 @@
-# Timed Photo Saver for Telegram (Saveit)
+# Timed & View-Once Media Saver for Telegram (Saveit)
 
-This script automatically saves timed (self-destructing) photos and other media from Telegram chats before they disappear. It uses the [Telethon](https://docs.telethon.dev/) library to interact with the Telegram API and download media files, saving them locally and **forwarding them to your Saved Messages as original files without compression**.
+Bu skript Telegram akkauntingizga kelgan har qanday bir martalik (view-once / self-destructing / timed) rasm, video, ovozli xabar (voice note) va yumaloq videolarni (video note) Telegram serveridan o'chib ketmasidan oldin avtomatik ravishda yuklab olib, **Saqlangan xabarlar ("Saved Messages")** ga doimiy (o'chib ketmaydigan) qilib yuboradi.
 
-## Features
+## Imkoniyatlar
 
-* Automatically downloads incoming timed/self-destructing media without requiring a command.
-* Saves downloaded media to the `downloads/` folder.
-* Forwards downloaded media to your Saved Messages **as original files** (no compression).
-* Supports documents, photos, and videos.
+* ✅ **Avtomatik bir martalik mediani saqlash**: Akkauntingizga bir martalik rasm, video yoki ovozli xabar kelishi bilan uni avtomatik saqlaydi.
+* ✅ **Doimiy format**: Rasm va videolarni buzilmagan, asl ko'rinishida va doimiy saqlaydi.
+* ✅ **To'liq ma'lumot (Caption)**: Yuboruvchining ismi, username, ID raqami, xabar yuborilgan vaqt va xabarga biriktirilgan asl matn (izoh) Saqlangan xabarlarda ko'rsatiladi.
+* ✅ **Qo'lda saqlash (`.saveit`)**: Oddiy media xabarlarga javob (`reply`) tariqasida `.saveit` yozsangiz ham ularni Saqlangan xabarlarga nusxalab beradi.
+* ✅ **Ovozli va yumaloq videolar**: Ovozli xabarlar va doirasimon (yumaloq) videolarni to'g'ri ijro etiladigan shaklda saqlaydi.
 
-## Requirements
+---
 
-Before running the script, make sure you have:
+## Sozlamalar (`.env`)
 
-* **Python 3.9+**
-* Python package `telethon`
+`.env` faylida quyidagi parametrlarni sozlashingiz mumkin:
 
-### Install required Python packages
-
-```bash
-pip install telethon
-```
-
-## Setup
-
-1. **Clone the repository**:
-
-```bash
-git clone https://github.com/DevURANIUM/Saveit.git
-cd Saveit
-```
-
-2. **Run the `run.sh` script** (Linux/macOS) or `run.bat` (Windows):
-
-```bash
-chmod +x run.sh
-./run.sh
-```
-
-or on Windows:
-
-```bat
-run.bat
-```
-
-The script will:
-
-* Create a `.env` file if it does not exist.
-* Ask for your Telegram API credentials.
-* Pull the latest updates from Git.
-* Install or update Telethon.
-* Run `Saveit.py`.
-
-3. **Manually configure API credentials (optional)**:
-
-Open the `.env` file and add:
-
-```
+```ini
 API_ID=YOUR_API_ID
 API_HASH=YOUR_API_HASH
-HANDLER=.saveit  # Or change to another prefix
-AUTO_SAVE_TIMED=true  # Automatically save incoming disappearing media
+HANDLER=.saveit          # Qo'lda saqlash prefiksi
+AUTO_SAVE_TIMED=true     # Bir martalik medialarni avtomatik saqlash (true/false)
+FORCE_DOCUMENT=false     # true = barchasini hujjat/fayl qilib yuborish, false = rasm/videoni to'g'ridan-to'g'ri ochiladigan qilish
 ```
 
-## How to Use
+---
 
-1. **Run the script**:
+## O'rnatish va Ishga tushirish
 
+1. **Kutubxonalarni o'rnatish**:
+```bash
+pip install telethon python-dotenv
+```
+
+2. **Ishga tushirish**:
+```bash
+./run.sh
+```
+yoki to'g'ridan-to'g'ri:
 ```bash
 python3 Saveit.py
 ```
 
-2. **Save media**:
-
-* Timed photos, videos, voice messages, video notes, and files are saved automatically as soon as they arrive.
-* For regular media, reply with `.saveit` (or your chosen handler).
-* The media will be saved to the `downloads/` folder and forwarded to your Saved Messages **as original files**.
-
-### Example
-
-1. Run the script:
-
-```bash
-python3 Saveit.py
-```
-
-2. In a Telegram chat, reply to a media message with `.saveit` to save it locally and forward it without compression.
-
-## Code Overview
-
-* **Client Setup**: Initializes the Telegram client using the provided API credentials.
-* **Command Listener**: Listens for `.saveit` commands in chats.
-* **Media Handling**: Downloads media and forwards it to Saved Messages **as original files**.
-
-## Dependencies
-
-* [Telethon](https://github.com/LonamiWebs/Telethon) - A Python library for interacting with the Telegram API.
-
-## License
-
-This project is licensed under the MIT License.
-
-## Support & Contributions
-
-For any issues or suggestions, contact:
-
-* [GitHub Issues](https://github.com/DevURANIUM/Saveit/issues)
-
-## Donation Links
-
-Support the project:
-
-- **BTC**: `bc1qcclcp574hnznm0nmdzzf0ta7366svjskttqks3`
-- **LTC**: `ltc1qcrkelw38gjrmg0ptjy2nshqej622kp76het7q0`
-- **XRP**: `rPoK5SBChFPqEiQv1W97LW6FKoJZLipDVQ`
-- **XLM**: `GDMUQREEZNBSTQOT5BV7MYEMXJFV3CYRZXUVOYCTIUZTHUWPHLVASFVD`
-- **TON**: `UQAJH2N0pqpvC9YN841w5NH1dCN9Lakwkpjvoy7vXf-vfqgv`
-- **TRON**: `TXJqhhwvkrTdnf5HReZf55hEzZuxjto3R4`
-- **USDT(BEP20)**: `0x1591036c4bD05b046532B65Df939fcd7824E18c7`
+> **Eslatma**: Birinchi marta ishga tushirganda Telegram telefon raqamingiz va tasdiqlash kodini kiritishingiz so'raladi. Shundan so'ng sessiya `save.session` faylida saqlanib qoladi va keyingi safar qayta kod so'ramaydi.
